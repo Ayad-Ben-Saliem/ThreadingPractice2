@@ -8,30 +8,27 @@ class Worker {
 
     private static final Random RANDOM = new Random();
 
-    private final Object LOCK1 = new Object();
-    private final Object LOCK2 = new Object();
-
     private List<Integer> list1 = new ArrayList<>();
     private List<Integer> list2 = new ArrayList<>();
 
     public void stage1() {
-        synchronized (LOCK1){
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        try {
+            Thread.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        synchronized (list1) {
             list1.add(RANDOM.nextInt());
         }
     }
 
     public void stage2() {
-        synchronized (LOCK2) {
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        try {
+            Thread.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        synchronized (list2){
             list2.add(RANDOM.nextInt());
         }
     }
@@ -49,7 +46,6 @@ class Worker {
         Thread t2 = new Thread(this::process);
 
         long start = System.currentTimeMillis();
-
         t1.start();
         t2.start();
 
@@ -62,6 +58,7 @@ class Worker {
 
         long end = System.currentTimeMillis();
         System.out.println("Worker spend " + (end - start) + " ms.");
+
         System.out.println("list1 = " + list1.size());
         System.out.println("list2 = " + list2.size());
     }

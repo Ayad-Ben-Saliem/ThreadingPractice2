@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Runner extends Thread {
+public class Runner implements Runnable {
 
     private final String name;
-    public boolean running = true;
+    private boolean running = true;
 
     public Runner(){
         this(null);
@@ -30,6 +30,6 @@ public class Runner extends Thread {
     }
 
     public void shutdown(){
-        Main.stopThread(this);
+        running = false;
     }
 }

@@ -26,6 +26,9 @@ public class Processor {
     }
 
     static class ChangeMaker extends Thread{
+
+        FunctionalInterface i;
+
         @Override
         public void run() {
             while (value < 5){
